@@ -1,0 +1,143 @@
+type Query {
+  account(pubKey: String!): Account
+  transaction(hash: String!): Transaction
+  ledger(number: Int, limit: Int = 1, order: Order = "desc", filterBy: FilterBy): [Ledger]
+}
+
+type Account {
+  id: String!
+  sequence: String!
+  homeDomain: String!
+  nativeBalance: String!
+  masterWeight: Int!
+  lowThreshold: Int!
+  mediumThreshold: Int!
+  highThreshold: Int!
+  flags: Flags!
+  balances: [Balance]
+  signers: [Signer]
+  data(name: String): [Data]
+  transactions(limit: Int = 10, order: Order = "desc", filterBy: FilterBy): [Transaction]
+}
+
+type Transaction {
+  transactionHash: String!
+  ledgerSequence: Int!
+  applicationOrder: Int!
+  account: String!
+  accountSequence: String!
+  maxFee: String!
+  operationCount: Int!
+  createdAt: String
+  updatedAt: String
+  id: String
+  txEnvelope: String!
+  txResult: String!
+  txMeta: String!
+  txFeeMeta: String!
+  signatures: [String!]!
+  memoType: String!
+  memo: String
+  timeBounds: [Int]
+  successful: Boolean
+  feeCharged: String
+  innerTransactionHash: String
+  feeAccount: String
+  innerSignatures: [String]
+  newMaxFee: String
+  operations(limit: Int = 10, order: Order = "desc"): [Operation]
+}
+
+type Ledger {
+  sequence: Int!
+	ledgerHash: String!
+	previousLedgerHash: String
+	transactionCount: Int!
+	operationCount: Int!
+	closedAt: String!
+	createdAt: String
+	updatedAt: String
+	id: Int
+	importerVersion: Int!
+	totalCoins: String!
+	feePool: String!
+	baseFee: Int!
+	baseReserve: Int!
+	maxTxSetSize: Int!
+	protocolVersion: Int!
+	ledgerHeader: String
+	successfulTransactionCount: Int
+	failedTransactionCount: Int
+  transactions(limit: Int = 10, order: Order = "desc"): [Transaction]
+}
+
+# Account Sub objects
+type Flags {
+  authRequired: Boolean!
+  authRevocable: Boolean!
+  authImmutable: Boolean!
+}
+
+type Balance {
+  balance: String!
+	buyingLiabilities: String!
+	sellingLiabilities: String!
+	limit: String!
+	lastModifiedLedger: Int!
+	isAuthorized: Boolean!
+	assetCode: String!
+	assetIssuer: String!
+}
+
+type Signer {
+  weight: Int!
+  key: String!
+}
+
+type Data {
+  name: String
+  value: String
+}
+
+# Transaction sub objects
+type Operation {
+  id: String!
+  transactionID: String!
+  applicationOrder: Int!
+  type: Int!
+  details: String
+  sourceAccount: String!
+}
+
+# Enums and other types
+enum Order {
+  asc
+  desc
+}
+
+input FilterBy {
+  account: AccountFilter
+  date: DateFilter
+  ledger: LedgerFilter
+}
+
+input AccountFilter {
+  pubKey: String!
+  direction: AccountFilterOption!
+}
+
+enum AccountFilterOption {
+  all
+  from
+  to
+}
+
+input DateFilter {
+  fromDate: String!
+  toDate: String!
+}
+
+input LedgerFilter {
+  fromNumber: Int!
+  toNumber: Int!
+}
