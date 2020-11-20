@@ -32,6 +32,6 @@ services:
       - CAPTIVE_CORE_PORT=8001
       - CAPTIVE_CORE_LOG_LEVEL=info
     volumes:
-      - /Users/jacob.owen/Code/personal/hubble-horizon/stellar-core_captive-testnet.cfg:/etc/stellar/stellar-core.cfg
+      - ./stellar-core_captive-testnet.cfg:/etc/stellar/stellar-core.cfg
     command: ["--apply-migrations"]
     network_mode: bridge
