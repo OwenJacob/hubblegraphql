@@ -21,16 +21,13 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres:password@host.docker.internal:5432/horizon?sslmode=disable
       - ENABLE_CAPTIVE_CORE_INGESTION=true
-      - REMOTE_CAPTIVE_CORE_URL=http://127.0.0.1:8001
       - STELLAR_CORE_URL=http://127.0.0.1:11626
-      - STELLAR_CORE_BINARY_PATH=/usr/bin/stellar-core
+      - STELLAR_CORE_BINARY_PATH=/usr/local/bin/stellar-core
       - STELLAR_CORE_CONFIG_PATH=/etc/stellar/stellar-core.cfg
       - HISTORY_ARCHIVE_URLS=https://history.stellar.org/prd/core-testnet/core_testnet_001
       - NETWORK_PASSPHRASE=Test SDF Network ; September 2015
       - INGEST=true
       - PER_HOUR_RATE_LIMIT=0
-      - CAPTIVE_CORE_PORT=8001
-      - CAPTIVE_CORE_LOG_LEVEL=info
     volumes:
       - ./stellar-core_captive-testnet.cfg:/etc/stellar/stellar-core.cfg
     command: ["--apply-migrations"]
