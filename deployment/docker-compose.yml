@@ -13,7 +13,7 @@ services:
     network_mode: bridge
 
   horizon:
-    image: stellar/horizon
+    image: stellar/horizon:1.12.0
     depends_on:
       - postgres
     ports:
