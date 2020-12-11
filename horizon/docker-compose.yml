@@ -29,5 +29,4 @@ services:
       - PER_HOUR_RATE_LIMIT=0
     volumes:
       - ./stellar-core_captive-testnet.cfg:/etc/stellar/stellar-core.cfg
-    command: ["--apply-migrations"]
     network_mode: bridge
