@@ -23,7 +23,8 @@ services:
       - DATABASE_URL=postgres://postgres:password@postgres:5432/horizon?sslmode=disable
       - ENABLE_CAPTIVE_CORE_INGESTION=true
       - STELLAR_CORE_URL=http://127.0.0.1:11626
-      - STELLAR_CORE_CONFIG_PATH=/etc/stellar/stellar-core.cfg
+      # - STELLAR_CORE_CONFIG_PATH=/etc/stellar/stellar-core.cfg
+      - CAPTIVE_CORE_CONFIG_APPEND_PATH=/etc/stellar/stellar-core.cfg
       - HISTORY_ARCHIVE_URLS=https://history.stellar.org/prd/core-testnet/core_testnet_001
       - NETWORK_PASSPHRASE=Test SDF Network ; September 2015
       - INGEST=true
@@ -42,7 +43,8 @@ services:
       - DATABASE_URL=postgres://postgres:password@postgres:5432/horizon?sslmode=disable
       - ENABLE_CAPTIVE_CORE_INGESTION=true
       - STELLAR_CORE_URL=http://127.0.0.1:11626
-      - STELLAR_CORE_CONFIG_PATH=/etc/stellar/stellar-core.cfg
+      # - STELLAR_CORE_CONFIG_PATH=/etc/stellar/stellar-core.cfg
+      - CAPTIVE_CORE_CONFIG_APPEND_PATH=/etc/stellar/stellar-core.cfg
       - HISTORY_ARCHIVE_URLS=https://history.stellar.org/prd/core-testnet/core_testnet_001
       - NETWORK_PASSPHRASE=Test SDF Network ; September 2015
       - INGEST=true
