@@ -20,7 +20,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgres://postgres:password@host.docker.internal:5432/horizon?sslmode=disable
+      - DATABASE_URL=postgres://postgres:password@postgres:5432/horizon?sslmode=disable
       - ENABLE_CAPTIVE_CORE_INGESTION=true
       - STELLAR_CORE_URL=http://127.0.0.1:11626
       - STELLAR_CORE_CONFIG_PATH=/etc/stellar/stellar-core.cfg
@@ -39,7 +39,7 @@ services:
     depends_on:
       - postgres
     environment:
-      - DATABASE_URL=postgres://postgres:password@host.docker.internal:5432/horizon?sslmode=disable
+      - DATABASE_URL=postgres://postgres:password@postgres:5432/horizon?sslmode=disable
       - ENABLE_CAPTIVE_CORE_INGESTION=true
       - STELLAR_CORE_URL=http://127.0.0.1:11626
       - STELLAR_CORE_CONFIG_PATH=/etc/stellar/stellar-core.cfg
@@ -52,7 +52,7 @@ services:
       - ./stellar-core_captive-testnet.cfg:/etc/stellar/stellar-core.cfg
     networks:
       - hubble
-    command: ["stellar-horizon", "db", "reingest", "range", "1", "801216"]
+    command: ["db", "reingest", "range", "1", "801216"]
 
 networks:
   hubble:
