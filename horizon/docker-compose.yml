@@ -10,10 +10,11 @@ services:
       - POSTGRES_DB=horizon
     volumes:
       - ./db-data:/var/lib/postgresql/data
-    network_mode: bridge
+    networks:
+      - hubble
 
   horizon:
-    image: stellar/horizon:1.12.0
+    image: 409629638261.dkr.ecr.eu-west-2.amazonaws.com/horizoningestion:latest
     depends_on:
       - postgres
     ports:
@@ -26,7 +27,33 @@ services:
       - HISTORY_ARCHIVE_URLS=https://history.stellar.org/prd/core-testnet/core_testnet_001
       - NETWORK_PASSPHRASE=Test SDF Network ; September 2015
       - INGEST=true
+      - APPLY_MIGRATIONS=true
       - PER_HOUR_RATE_LIMIT=0
     volumes:
       - ./stellar-core_captive-testnet.cfg:/etc/stellar/stellar-core.cfg
-    network_mode: bridge
+    networks:
+      - hubble
+
+  reingest:
+    image: 409629638261.dkr.ecr.eu-west-2.amazonaws.com/horizoningestion:latest
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://postgres:password@host.docker.internal:5432/horizon?sslmode=disable
+      - ENABLE_CAPTIVE_CORE_INGESTION=true
+      - STELLAR_CORE_URL=http://127.0.0.1:11626
+      - STELLAR_CORE_CONFIG_PATH=/etc/stellar/stellar-core.cfg
+      - HISTORY_ARCHIVE_URLS=https://history.stellar.org/prd/core-testnet/core_testnet_001
+      - NETWORK_PASSPHRASE=Test SDF Network ; September 2015
+      - INGEST=true
+      - APPLY_MIGRATIONS=true
+      - PER_HOUR_RATE_LIMIT=0
+    volumes:
+      - ./stellar-core_captive-testnet.cfg:/etc/stellar/stellar-core.cfg
+    networks:
+      - hubble
+    command: ["stellar-horizon", "db", "reingest", "range", "1", "801216"]
+
+networks:
+  hubble:
+    external: true

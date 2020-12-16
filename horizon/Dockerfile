@@ -17,4 +17,4 @@ RUN apt-get clean
 
 COPY --from=builder /go/bin/captivecore ./
 
-ENTRYPOINT ["stellar-horizon", "--apply-migrations"]
+ENTRYPOINT ["stellar-horizon"]
